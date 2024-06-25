@@ -1,16 +1,12 @@
-const { Sequelize } = require('sequelize');
+
+// src/database.js
+
 const { development } = require('./config');
+const { Sequelize, DataTypes } = require('sequelize');
 
-// CREATE TABLE pessoas (
-//     id INT AUTO_INCREMENT PRIMARY KEY,
-//     nome VARCHAR(255) NOT NULL,
-//     email VARCHAR(255) NOT NULL UNIQUE,
-//     senha VARCHAR(255)
-//   );
-  
-// INSERT INTO pessoas (nome, email, senha) VALUES ('João da Silva', 'joao@example.com', 'senha123');
+const sequelize = new Sequelize(development);
 
-const sequelize = new Sequelize(development)
+// Sincronizar todos os modelos, incluindo Pessoa
 sequelize.sync()
   .then(() => {
     console.log('Conexão com o banco de dados estabelecida com sucesso.');
@@ -19,4 +15,10 @@ sequelize.sync()
     console.error('Erro ao conectar ao banco de dados:', error);
   });
 
-module.exports = sequelize
+
+
+
+
+
+
+module.exports = { sequelize, DataTypes };

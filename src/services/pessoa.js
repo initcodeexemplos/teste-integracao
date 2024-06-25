@@ -1,48 +1,57 @@
-const RepositorioExercicio= require("../repositories/pessoa.js")
+const RepositorioExercicio = require("../repositories/pessoa.js");
 
-const repositorio = new RepositorioExercicio()
+const repositorio = new RepositorioExercicio();
+
 class ServicoExercicio {
 
     async PegarUm(id){
-      if(!id || isNaN(id)) {
-        throw new Error("Favor corretamente o id.")
-      }
-      return repositorio.PegarUm(id)
+        if(!id || isNaN(id)) {
+            throw new Error("Favor corretamente o id.");
+        }
+        return repositorio.PegarUm(id);
     }
 
-    async PegarTodos(){
-      return repositorio.PegarTodos()
+    static async PegarTodos(transaction) {
+        return repositorio.PegarTodos(transaction);
     }
 
-    async Adicionar(pessoa){
-      if(!pessoa) {
-        throw new Error("Favor preencher o pessoa.")
-      } else if(!pessoa.nome) {
-        throw new Error("Favor preencher o nome.")
-      } else if(!pessoa.email) {
-        throw new Error("Favor preencher o email.")
-      } else if(!pessoa.senha) {
-        throw new Error("Favor preencher o senha.")
-      }
-
-      return repositorio.Adicionar(pessoa)
+    static async Adicionar(pessoa, transaction) {
+        if (!pessoa) {
+            throw new Error("Favor preencher o pessoa.");
+        } else if (!pessoa.nome) {
+            throw new Error("Favor preencher o nome.");
+        } else if (!pessoa.email) {
+            throw new Error("Favor preencher o email.");
+        } else if (!pessoa.senha) {
+            throw new Error("Favor preencher o senha.");
+        }
+    
+        return repositorio.Adicionar(pessoa, transaction);
     }
 
-    async Alterar(id, pessoa){
-      if(!id || isNaN(id)) {
-        throw new Error("Favor corretamente o id.")
-      }
+    static async Alterar(id, pessoa, transaction){
+        if(!id || isNaN(id)) {
+            throw new Error("Favor corretamente o id.");
+        }
 
-      return repositorio.Adicionar(pessoa)
+        return repositorio.Alterar(id, pessoa, transaction);
     }
 
-    async Deletar(id){
-      if(!id || isNaN(id)) {
-        throw new Error("Favor corretamente o id.")
-      }
+    static async Deletar(id, transaction){
+        if(!id || isNaN(id)) {
+            throw new Error("Favor corretamente o id.");
+        }
 
-      return repositorio.Deletar(id)
+        return repositorio.Deletar(id, transaction);
     }
 
+    async PegarPorEmail(email, transaction){
+        if (!email) {
+            throw new Error("Favor preencher o email.");
+        }
+
+        return repositorio.PegarPorEmail(email, transaction);
+    }
 }
-module.exports = ServicoExercicio
+
+module.exports = ServicoExercicio;
