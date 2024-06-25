@@ -7,33 +7,43 @@ class RepositorioExercicio {
             where: {
                 id
             }
-        })
+        });
     }
 
-    async PegarTodos(){
-        return Pessoa.findAll()
+    async PegarTodos(transaction){
+        return Pessoa.findAll({ transaction });
     }
 
-    async Adicionar(pessoa){
-        return Pessoa.create({ ...pessoa})
+    async Adicionar(pessoa, transaction){
+        return Pessoa.create(pessoa, { transaction });
     }
 
-    async Alterar(id, pessoa){
+    async Alterar(id, pessoa, transaction){
         return Pessoa.update(pessoa, {
             where: {
                 id
-            }
-        })
+            },
+            transaction
+        });
     }
 
-    async Deletar(id){
+    async Deletar(id, transaction){
         return Pessoa.destroy({
             where: {
                 id
-            }
-        })
+            },
+            transaction
+        });
     }
 
+    async PegarPorEmail(email, transaction){
+        return Pessoa.findOne({
+            where: {
+                email
+            },
+            transaction
+        });
+    }
 }
 
-module.exports = RepositorioExercicio
+module.exports = RepositorioExercicio;
